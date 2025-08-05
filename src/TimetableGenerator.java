@@ -84,7 +84,7 @@ public class TimetableGenerator {
         Map<String,List<String>> subjectsByDiv = new HashMap<>();
         subjectsByDiv.put("A", Arrays.asList("CN","DSML","SEPM","SMSS"));
         subjectsByDiv.put("B", Arrays.asList("CN","DSML","SEPM","SMSS"));
-        subjectsByDiv.put("C", Arrays.asList("CN","DSML","SMSS"));
+        subjectsByDiv.put("C", Arrays.asList("CN","DSML","SMSS","SEPM"));
         subjectsByDiv.put("D", Arrays.asList("CN","DSML","SEPM","SMSS"));
 
         // Set required session counts
@@ -387,7 +387,8 @@ public class TimetableGenerator {
                     case "Lab" -> "(Lab)";
                     default -> "";
                 };
-                String display = s.subject + " " + typeLabel;
+                String display = s.subject + " " + typeLabel + " (" + s.faculty + ")";
+
 
                 for (int i = 0; i < s.duration; i++) {
                     if (startIdx + i >= timetable[s.day].length) break;
@@ -397,21 +398,22 @@ public class TimetableGenerator {
 
             // Print Header
             // Print Header
-            System.out.printf("%-10s", "Day/Time");
+            // Print Header with wider columns
+            System.out.printf("%-15s", "Day/Time");    // Slightly adjusted width for day column
             for (int h = startHour; h < endHour; h++) {
-                System.out.printf("%-12s", h + "-" + (h + 1));
+                System.out.printf("%-25s", h + "-" + (h + 1));
             }
             System.out.println();
 
-
-            // Print timetable rows
+// Print timetable rows with wider columns
             for (int day = 0; day < 5; day++) {
-                System.out.printf("%-10s", dayName[day]);
+                System.out.printf("%-15s", dayName[day]);
                 for (int h = 0; h < endHour - startHour; h++) {
-                    System.out.printf("%-12s", timetable[day][h]);
+                    System.out.printf("%-25s", timetable[day][h]);
                 }
                 System.out.println();
             }
+
         }
     }
 
